@@ -1,0 +1,41 @@
+1. #include <stdio.h>
+
+2. printf(const char *format, ...) only takes a format string.
+fprintf(FILE *stream, const char *format, ...) takes an extra first argument,
+the output stream to write to.
+
+3. printf() always writes to stdout, the standard output stream. fprintf() writes
+to whatever output stream you give it.
+
+4. Hello, world!
+
+5. Section 2 (System calls)
+
+6. #include <unistd.h>
+
+7. (blank)
+
+8.
+// Kewuser Jemal
+// September 22, 2026
+// Prints a message using the write() system call
+#include <unistd.h>
+
+int main( int argc, char* argv[] ){
+    write(STDOUT_FILENO, "Hello, world!\n", 14);
+    return 0;
+}
+
+9. When I changed it to 1000, the compiler gave a warning that write() was reading
+1000 bytes from a string that's only 15 bytes. When I ran it, it printed
+"Hello, world!" followed by a bunch of garbage characters. This happens because
+write() doesn't know where the string ends, it just outputs however many bytes
+you tell it. So it kept reading past the end of the string into whatever memory
+came next in the program and printed that as text.
+
+10. I'd use a C library function when I want my code to be portable, since it works
+on any OS with a C compiler, and when I want conveniences like formatting and
+buffering. I'd use a system call when I need low-level control, want to avoid the
+extra overhead of the library, or need an OS feature the library doesn't provide.
+
+11. Hello World!
