@@ -1,0 +1,32 @@
+CSCI 2510 Studio 2: Input/Output
+Kewuser Jemal
+
+Exercise 1: cat with no arguments
+When I ran cat and typed a line, it printed the same line right back after I hit enter. It's reading from the keyboard (stdin) and printing to the screen (stdout). Ctrl-D ended it.
+
+Exercise 2: cat < mars.txt
+It printed the whole contents of mars.txt to the terminal. The < makes cat read from the file instead of the keyboard.
+
+Exercise 3: cat < mars.txt > new.txt
+Nothing showed up on screen. new.txt got created and it was an exact copy of mars.txt, since the > sent the output into the file instead of the terminal.
+
+Exercise 4: cat > new.txt
+What I typed didn't print back to the screen, it went into new.txt. The file only had my new lines, and the Mars text was gone because > overwrites the file.
+
+Exercise 5: cat >> new.txt
+Each time I ran it, my new lines got added to the end of new.txt and the old stuff stayed. After a few runs the file had everything I'd typed. So >> appends and > overwrites.
+
+Exercise 6: copy.c
+Header file: unistd.h
+Buffer exercise: (blank)
+Return type of read(): ssize_t
+End of file is when read() returns 0 (it returns -1 if there's an error).
+
+Exercise 7: testing copy
+My copy program acted the same as cat every time I tested it. It echoed keyboard input with no redirect, printed the file with <, overwrote with >, and appended with >>.
+
+Exercise 8: changing bufferSize
+I tried 200, 50, 10, and 1. The output matched mars.txt every time (diff showed nothing), so bufferSize doesn't change whether the program is correct. That's because I only write the n bytes that read() returned, so a smaller buffer just means more loops. I also timed it on a 20 MB file. Size 1 took about 4.2 seconds and size 200 took about 0.03 seconds, and most of the extra time was system time from all the read() and write() calls.
+
+Exercise 9: tradeoff
+A small buffer barely uses any memory, but it needs a ton more read() and write() calls, and every one of those has to go through the kernel, so it's slower. A big buffer makes fewer calls so it's faster, but it uses more memory, and after a certain point making it bigger doesn't help much.
