@@ -1,0 +1,42 @@
+1. (see open.c below)
+2. Nothing printed, no error message. open() fails silently because the return value isn't checked.
+3. Nothing printed, no error message. Permission was denied but the program doesn't report it.
+4. open() returns -1 on error (and sets errno).
+5. if (fd == -1)
+6. perror("Error opening file");
+7.
+8. Prints "Error opening file: No such file or directory" and exits.
+9. Prints "Error opening file: Permission denied" and exits.
+10.
+   open: returns -1 on error, sets errno
+   close: returns -1 on error, sets errno
+   read: returns -1 on error, sets errno
+   write: returns -1 on error, sets errno
+   printf: returns a negative value on error, sets errno
+11.
+   - Errors get caught right where they happen, instead of causing confusing crashes or wrong behavior later.
+   - perror() says exactly what went wrong (no such file, permission denied), so debugging is much faster.
+
+--- open.c ---
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+int main(int argc, char *argv[]) {
+    char buf[1024];
+    ssize_t n;
+
+    int fd = open(argv[1], O_RDONLY);
+    if (fd == -1) {
+        perror("Error opening file");
+        return -1;
+    }
+
+    while ((n = read(fd, buf, sizeof(buf))) > 0) {
+        write(STDOUT_FILENO, buf, n);
+    }
+
+    close(fd);
+    return 0;
+}
