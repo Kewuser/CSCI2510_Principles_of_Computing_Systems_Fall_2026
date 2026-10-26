@@ -1,0 +1,39 @@
+Exercise 1:
+PID: 609
+PID: 615
+PID: 621
+
+Exercise 2:
+PID: 744
+PID: 745
+
+Exercise 3:
+Parent gets the child's PID (positive number). Child gets 0. On failure, -1 is returned to the parent, no child is created, and errno is set.
+
+Exercise 4:
+Parent: PID 809, child PID 810
+Child: PID 810
+
+Exercise 5:
+Parent: PID 881, child PID 882
+Child: PID 882 (printed about 3 seconds later, after the shell prompt returned)
+The parent does not wait for the child, so it exits first and the prompt returns while the child is still sleeping.
+
+Exercise 6:
+Child: PID 944
+Parent: PID 943, child PID 944
+waitpid makes the parent wait for the child, so the child prints first and the prompt returns only after both finish.
+
+Exercise 7:
+total 24
+-rwxrwxrwx 1 kewuser kewuser  5946 Oct 25 20:48 README.md
+-rwxrwxrwx 1 kewuser kewuser 16176 Oct 25 20:56 fork
+-rwxrwxrwx 1 kewuser kewuser   346 Oct 25 20:56 fork.c
+Parent: PID 982, child PID 983
+
+Exercise 8:
+total 24
+-rwxrwxrwx 1 kewuser kewuser  5946 Oct 25 20:48 README.md
+-rwxrwxrwx 1 kewuser kewuser 16176 Oct 25 20:57 fork
+-rwxrwxrwx 1 kewuser kewuser   399 Oct 25 20:57 fork.c
+Parent: PID 1102, child PID 1103
