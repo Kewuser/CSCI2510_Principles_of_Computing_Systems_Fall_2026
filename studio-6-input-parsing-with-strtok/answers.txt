@@ -1,0 +1,45 @@
+Step 1:
+Enter input: This is an input string.
+This is an input string.
+
+Step 2:
+On the first call to strtok(), you pass the string to parse. On subsequent calls for the same string, you pass NULL as the first argument, and strtok() continues from where the previous call left off.
+
+Step 3:
+A space, " "
+Step 5:
+
+Step 4:
+This
+
+Step 5:
+This
+is
+an
+input
+string.
+
+Step 6:
+buffer[strcspn(buffer, "\n")] = '\0';
+
+Step 7:
+(blank)
+
+Step 8:
+cmd = strtok(buffer, " ");
+
+Step 9:
+my_argv[0] = cmd;
+
+int i = 1;
+char* res = strtok(NULL, " ");
+while (res != NULL && i < max_args + 1) {
+    my_argv[i] = res;
+    i++;
+    res = strtok(NULL, " ");
+}
+my_argv[i] = NULL;
+
+Step 10:
+Enter input: ls -l
+(paste your ls -l output here)
