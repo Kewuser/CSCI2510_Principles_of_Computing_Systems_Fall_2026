@@ -7,7 +7,6 @@ On the first call to strtok(), you pass the string to parse. On subsequent calls
 
 Step 3:
 A space, " "
-Step 5:
 
 Step 4:
 This
@@ -41,5 +40,8 @@ while (res != NULL && i < max_args + 1) {
 my_argv[i] = NULL;
 
 Step 10:
-Enter input: ls -l
-(paste your ls -l output here)
+total 29
+-rwxrwxrwx 1 kewuser kewuser  5991 Oct 27 21:37 README.md
+-rwxrwxrwx 1 kewuser kewuser   654 Oct 27 21:58 answers.txt
+-rwxrwxrwx 1 kewuser kewuser 16224 Oct 27 21:43 studio6
+-rwxrwxrwx 1 kewuser kewuser   660 Oct 27 21:42 studio6.c
