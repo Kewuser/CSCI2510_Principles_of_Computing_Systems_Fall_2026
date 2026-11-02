@@ -1,0 +1,80 @@
+CSCI 2510: Studio 7 - Pipes
+Answers
+
+=== 1. Program 1 and Program 2 ===
+
+Program 1 (print.c):
+
+#include <stdio.h>
+int main(void) {
+    printf("Program 1 output line\n");
+    return 0;
+}
+
+Program 2 (echo.c):
+
+#include <stdio.h>
+int main(void) {
+    char input[256];
+    while (1) {
+        if (fgets(input, sizeof(input), stdin) == NULL) break;
+        printf("Program 2 got: %s\n", input);
+    }
+    return 0;
+}
+
+=== 2. pipe.c with two children (fork + execvp), no pipe yet ===
+
+Program output:
+
+Program 1 output line
+^C
+
+(The program never returns. Program 2 is waiting for input that never
+comes, so I killed it with CTRL-C.)
+
+=== 3. Which element of fd[2] is the read end and which is the write end? ===
+
+fd[0] is the read end of the pipe.
+fd[1] is the write end of the pipe.
+
+=== 4. Which argument of dup2() is closed? ===
+
+dup2(oldfd, newfd): the second argument (newfd) is closed when the function
+succeeds. It then becomes a copy of oldfd.
+
+=== 5. dup2() code ===
+
+In the first child (print), before execvp:
+    dup2(fd[1], STDOUT_FILENO);
+
+In the second child (echo), before execvp:
+    dup2(fd[0], STDIN_FILENO);
+
+=== 6. Output with dup2() added (before close() calls) ===
+
+Program 2 got: Program 1 output line
+^C
+
+(Program 1's output was read by Program 2 and reprinted. The program still
+does not terminate because the write end of the pipe is still open, so I
+killed it with CTRL-C.)
+
+=== 7. Output after adding close() calls ===
+
+close(fd[0]) and close(fd[1]) added in child 1 (after dup2), in child 2
+(after dup2), and in the parent (before waitpid).
+
+Program 2 got: Program 1 output line
+
+(Program now terminates on its own.)
+
+=== 8. Two advantages of stream ambiguity ===
+
+1. Reusability and composability: programs can be chained together without
+   being modified or knowing about each other. Any program that reads stdin
+   and writes stdout can be connected to any other.
+
+2. Flexibility: the same program works whether its input/output is a file, a
+   pipe, a terminal, or a network socket, with no code changes, because the
+   operating system handles where the data comes from and where it goes.
