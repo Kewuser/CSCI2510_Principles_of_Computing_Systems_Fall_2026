@@ -3,6 +3,8 @@ Slept for 0 iterations!
 Slept for 1 iterations!
 Slept for 2 iterations!
 Slept for 3 iterations!
+...
+...
 Slept for 52 iterations!
 
 2. SIGINT has numeric value 2. Comment: Interrupt from keyboard.
@@ -14,6 +16,10 @@ Slept for 52 iterations!
 Slept for 27 iterations!
 Slept for 28 iterations!
 [1]+  Terminated                 ./sleep
+
+5. (Read call_sleeper.c. It forks, execs ./sleep in the child, and the parent waits for the child.)
+
+5. (Read call_sleeper.c. It forks, execs ./sleep in the child, and the parent waits for the child.)
 
 6. Both the sleeper and the caller terminated. The caller did not print its success message, because CTRL-C sent SIGINT to both processes in the foreground group.
 
@@ -36,6 +42,8 @@ Slept for 0 iterations!
 Slept for 1 iterations!
 Slept for 2 iterations!
 Slept for 3 iterations!
+...
+...
 Slept for 4 iterations!
 Slept for 5 iterations!
 Slept for 6 iterations!
