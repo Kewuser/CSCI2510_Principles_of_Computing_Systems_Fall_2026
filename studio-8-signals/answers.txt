@@ -1,0 +1,50 @@
+1. Sleeper's PID is: 575
+Slept for 0 iterations!
+Slept for 1 iterations!
+Slept for 2 iterations!
+Slept for 3 iterations!
+Slept for 52 iterations!
+
+2. SIGINT has numeric value 2. Comment: Interrupt from keyboard.
+
+3. The sleeper process was terminated. Running kill -s 2 <pid> from a second terminal sent SIGINT (signal 2), which has the same effect as pressing CTRL-C, so the process was killed.
+
+4. I picked SIGTERM (signal 15). I ran ./sleep & in the background, then sent kill -s 15 906. The sleeper was terminated. Output:
+
+Slept for 27 iterations!
+Slept for 28 iterations!
+[1]+  Terminated                 ./sleep
+
+6. Both the sleeper and the caller terminated. The caller did not print its success message, because CTRL-C sent SIGINT to both processes in the foreground group.
+
+7. Signal handling code:
+
+void handle_sigint( int signum ){
+        printf("Ignoring SIGINT in the caller.\n");
+}
+
+and in main():
+
+signal( SIGINT, handle_sigint );
+
+8. Program output:
+
+Forking sleeper...
+Waiting for sleeper 1057...
+Sleeper's PID is: 1057
+Slept for 0 iterations!
+Slept for 1 iterations!
+Slept for 2 iterations!
+Slept for 3 iterations!
+Slept for 4 iterations!
+Slept for 5 iterations!
+Slept for 6 iterations!
+Slept for 7 iterations!
+Slept for 8 iterations!
+Slept for 9 iterations!
+Slept for 10 iterations!
+Slept for 11 iterations!
+^CIgnoring SIGINT in the caller.
+Parent finished waiting and returned successfully!
+
+9. A server program could handle SIGTERM (or SIGHUP) so that when the OS or an admin asks it to shut down, it can finish in-flight requests, flush buffers, close files and sockets, and clean up before exiting instead of being killed abruptly. Another example is SIGALRM, used to handle timers and timeouts asynchronously.
